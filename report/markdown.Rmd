@@ -1,0 +1,153 @@
+---
+title: "Friends"
+author: "Mustafa Kaan Koc"
+date: "2026-05-07"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  warning = FALSE,
+  message = FALSE
+)
+
+library(tidyverse)
+library(knitr)
+```
+
+## *FRIENDS*
+
+
+## 1.Description
+
+*Friends* is an American television sitcom created by David Crane and Marta Kauffman, which aired on NBC from September 22, 1994, to May 6, 2004, lasting ten seasons. With an ensemble cast starring Jennifer Aniston, Courteney Cox, Lisa Kudrow, Matt LeBlanc, Matthew Perry, and David Schwimmer, the show revolves around six friends in their 20s and early 30s who live in Manhattan, New York City. The original executive producers were Kevin S. Bright, Kauffman, and Crane.
+
+Kauffman and Crane began developing *Friends* under the working title Insomnia Cafe between November and December 1993. They presented the idea to Bright, and together they pitched a seven-page treatment of the show to NBC. After several script rewrites and changes, including title changes to Six of One and *Friends* Like Us, the series was finally named *Friends*. Filming took place at Warner Bros. Studios in Burbank, California.
+
+All ten seasons of *Friends* ranked within the top ten of the final television season ratings; ultimately reaching the number 1 spot in its eighth season. The series finale aired on May 6, 2004, and was watched by around 52.5 million American viewers, making it the fifth-most-watched series finale in American television history and the most-watched television episode of the 2000s. *Friends* received acclaim throughout its run, becoming one of the most popular and highest-grossing television shows of all time. The show's success led to a spin-off series, Joey, and a reunion special, *Friends: The Reunion*.
+
+
+## 2.Logo of the Series
+
+```{r, echo=FALSE, out.width="70%", fig.align="center"}
+knitr::include_graphics("Friends_logo.svg.png")
+```
+
+## 3. Basic Statistics
+
+```{r data}
+library(tidyverse)
+
+friends <- data.frame(
+  Season = 1:10,
+  Viewers = c(24.8, 31.7, 26.1, 25.0, 24.7,
+              23.0, 22.1, 26.7, 23.9, 26.1),
+  Rating = c(15.6, 18.7, 16.8, 16.1, 15.7,
+             14.0, 12.6, 15.0, 13.5, 13.6)
+)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r viewers_table}
+kable(
+  friends[, c("Season", "Viewers")],
+  col.names = c("Season", "Viewers (Millions)"),
+  caption = "*Friends* Viewership by Season"
+)
+```
+
+
+```{r ratings_table}
+knitr::kable(
+  friends[, c("Season", "Rating")],
+  col.names = c("Season", "Rating"),
+  caption = "*Friends* Ratings by Season"
+)
+```
+```{r ratings_plot}
+ggplot(friends, aes(x = Season, y = Rating)) +
+  geom_line(linewidth = 1.2, color = "purple") +
+  geom_point(size = 3, color = "orange") +
+  labs(
+    title = "Friends Ratings by Season",
+    x = "Season",
+    y = "Rating"
+  )
+```
+
+
+## 4. A graph of the viewership over time.
+
+
+```{r}
+ggplot(friends, aes(x = Season, y = Viewers)) +
+  geom_line(linewidth = 1.2, color = "blue") +
+  geom_point(size = 3, color = "red") +
+  labs(
+    title = "Friends Viewership by Season",
+    x = "Season",
+    y = "Viewers (Millions)"
+  ) +
+  theme_minimal()
+```
+
+
+
+```{r graph1, include=FALSE}
+library(tidyverse)
+
+theme_set(theme_minimal(base_size = 14))
+```
+
+## 5. Change In Viewership
+```{r changes_plot}
+friends <- friends %>%
+  mutate(Change = c(NA, diff(Viewers)))
+
+ggplot(friends[-1, ], aes(x = Season, y = Change)) +
+  geom_col(fill = "darkgreen") +
+  labs(
+    title = "Season-to-Season Change in Viewership",
+    x = "Season",
+    y = "Change in Millions"
+  )
+```
+
+## 6.Observed Changes
+
+# Discussion
+
+The largest increase in viewership occurred between Seasons 1 and 2,
+when the audience increased by approximately 6.9 million viewers
+(from 24.8 million to 31.7 million).
+
+After Season 2, the show experienced a decline of approximately
+5.6 million viewers between Seasons 2 and 3.
+
+Viewership remained relatively stable between Seasons 4 and 7,
+with only small fluctuations of less than 2 million viewers.
+
+Another significant increase occurred between Seasons 7 and 8,
+when viewership rose by approximately 4.6 million viewers.
+
+The largest decrease in the later seasons happened between
+Seasons 8 and 9, when the audience dropped by around
+2.8 million viewers.
+
+Finally, the series ended strongly, with Season 10 gaining
+approximately 2.2 million more viewers than Season 9.
